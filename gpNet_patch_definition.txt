@@ -1,0 +1,4 @@
+Address	          Length	Original bytes	Patched bytes
+000000000000A088	0x3	    2B C6 00 	      B6 FE FF 			# exit after the pw creation
+000000000005C490	0x4	    00 40 A0 E1 	  F0 83 BD E8 	# Stub out gpSend
+000000000005EDE3	0x1	    0A 	            1A 						# Get rid of the fork
