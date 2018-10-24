@@ -7,7 +7,10 @@ Files:
 * gpNet_patch_definition.txt patches I needed to make to gpNet to gather the prefixes 
 * password.list is the prefixes. "snow" would be the output for a 0 input. Line Number-2 is the input / output correlation. 
 
-I do a lot of "deciphering of code" via static analysis. After seeing [KonradIt's disclosure](https://github.com/KonradIT/GoProWirelessPassword) and wanting to do this exercisse for awhile, I wanted to determine every possible wifi password. The latest GoPro's set a password using the following convention: \[sport\]\[0-9\]\[0-9\]\[0-9\]\[0-9\] ie. wave1234. To determine all the possible password combinations I would need to sniff all the prefixes. Reviewing the code was quite complicated due to some obfuscation. However, I thought this would be a great time to use a dynamic analysis method with Docker. After learning docker, and creating an image ran by QEMU-arm, I couldn't debug the code. I realized QEMU can't/does virtualize the hardware breakpoints and therefore can run gdb. After some research I went to justing the gdb like server built into qemu itself. Check out my methodology and the resulting password dictionary file. 
+# How this list was created
+Since this password scheme came out we've wanted to determine every password combination. After seeing [KonradIt's disclosure](https://github.com/KonradIT/GoProWirelessPassword) we finally sat down and reversed the password generation methodology. The latest GoPro's set a password using the following convention: \[sport\]\[0-9\]\[0-9\]\[0-9\]\[0-9\] ie. wave1234, sport5678, or tennis2222. 
+
+To determine all the possible password combinations I would need to sniff all the prefixes. Reviewing the code was quite complicated due to some obfuscation. However, I thought this would be a great time to use a dynamic analysis method with Docker. After learning docker, and creating an image ran by QEMU-arm, I couldn't debug the code. I realized QEMU can't/does virtualize the hardware breakpoints and therefore can run gdb. After some research I went to justing the gdb like server built into qemu itself. Check out my methodology and the resulting password dictionary file. 
 
 Reference for running & debugging ARM code found in the linux sub-process
 
@@ -65,4 +68,4 @@ b *0x9FEC
 c
 ```
 
-if using IDA be sure to open up the ports in linux and in your client pc's firewall
+If you are using IDA be sure to open up the ports in linux and in your client pc's firewall
